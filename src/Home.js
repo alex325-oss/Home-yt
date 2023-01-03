@@ -1,75 +1,43 @@
 import React from 'react';
 import { Box, AppBar, Toolbar, Typography, Button, IconButton, List,
-   Divider, ListItemText,ListItem,ListItemButton, Drawer } from '@mui/material';
-/* import { render } from 'react';
-import { BrowserRouter as Router } from 'react'; */
+   Divider, ListItemText,ListItem,ListItemButton, Drawer, Grid } from '@mui/material';
+import { useState } from 'react';
 
 
-import MenuIcon from '@mui/icons-material/Menu'
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import HomeIcon from '@mui/icons-material/Home';
+import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import AppsIcon from '@mui/icons-material/Apps';
-import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import HistoryIcon from '@mui/icons-material/History';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import GamesIcon from '@mui/icons-material/Games';
+import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
-const drawerWidth = 180;
+const drawerWidth = 240;
 
 
 function Home() {
 
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
-  //aqui é o codigo da IA, a intenção desse codigo é esconder o drawer
-  /* class Drawer extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        visible: false
-      };
-    }
-  
-    toggleVisibility() {
-      this.setState({
-        visible: !this.state.visible
-      });
-    }
-  
-    render() {
-      const { visible } = this.state;
-      return (
-        <div className="drawer">
-          {visible && (
-            <div>
-              This is the content of the drawer
-            </div>
-          )}
-        </div>
-      );
-    }
-  }
-  class App extends React.Component {
-    render() {
-      return (
-        <Router>
-          <div>
-            <button onClick={() => this.drawer.toggleVisibility(MenuIcon)}>
-              Toggle Drawer
-            </button>
-            <Drawer ref={(drawer) => this.drawer = drawer} />
-          </div>
-        </Router>
-      );
-    }
-  }; */
+    const toggleDrawer = () => {
+      setDrawerOpen(!drawerOpen);
+    } 
 
-
-    //aqui é o codigo que eu estava fazendo 
-    //na linha 96 é o drawer 
     return(
         <div>
             <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color='inherit'>
+      <AppBar position="absolute" color='inherit' >
         <Toolbar>
           <IconButton
             size="large"
@@ -77,7 +45,7 @@ function Home() {
             color="inherit"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <MenuIcon className='menu-icon' onClick={toggleDrawer} />
             </IconButton>
             <img src='/imagens/preto.png'
             alt='preto'
@@ -91,24 +59,26 @@ function Home() {
           <Button startIcon={<AccountCircleIcon />} variant='outlined' color="secondary" >Fazer Login</Button> 
         </Toolbar>
       </AppBar>
-
-      <Drawer
-        variant="permanent"
-        sx={{
+       <Box display='flex'>
+        {drawerOpen && (
+          <div> 
+        <Drawer 
+          sx={{
           width: drawerWidth,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', borderRight: 'none', boxShadow: '2' , position: 'static', height: '100%',  },
         }}
-      >
-        <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
+        variant="permanent"
+        >
+          <Toolbar />
+          <Box sx={{ overflow: 'auto' }}>
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            {['Inicio', 'Shorts'].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} 
-                  </ListItemIcon>
+                     {index % 3 === 0 ?  <HomeIcon /> : <PlayCircleFilledIcon /> }
+                     </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>
               </ListItem>
@@ -116,19 +86,298 @@ function Home() {
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            {['biblioteca', 'historico' ].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}  
+                      {index % 2 === 0 ? <VideoLibraryIcon /> : <HistoryIcon />}  
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>
               </ListItem>
-            ))}
+            ))} 
           </List>
         </Box>
-      </Drawer>
+        <Divider />
+        <Box p={4}>
+            <Typography variant='body1' >Faça login para curtir vídeos, comentar e se inscrever. </Typography>
+            <Box mt={2}>
+              <Button 
+              variant='outlined'
+              color='secondary'
+              startIcon={<AccountCircleIcon />}
+              >
+                Fazer Login
+              </Button>
+            </Box>
+        </Box>
+        <Divider />
+        <List>
+          <ListItemButton >
+            <SportsSoccerIcon /><Typography>Esportes</Typography>
+          </ListItemButton>
+          <ListItemButton >
+            <MusicNoteIcon  /><Typography>Musicas</Typography>
+          </ListItemButton>
+          <ListItemButton >
+            <NewspaperIcon   /><Typography>Noticias</Typography>
+          </ListItemButton>
+          <ListItemButton >
+            <GamesIcon /><Typography>Jogos</Typography>
+          </ListItemButton>
+          <ListItemButton >
+            <LocalMoviesIcon/><Typography>Filmes</Typography>
+          </ListItemButton>
+          <ListItemButton >
+            <LiveTvIcon /><Typography>Ao vivo</Typography>
+          </ListItemButton>
+          <ListItemButton >
+            <YouTubeIcon/><Typography>Destaque</Typography>
+          </ListItemButton>
+          <Divider />
+          <ListItemButton >
+            <AddCircleIcon/><Typography>Procurar Canais</Typography>
+          </ListItemButton>
+          <Divider />
+        </List>
+      </Drawer> 
+    </div>
+    )}
+
+    <Box p={5}>
+      <Toolbar />
+      <Typography
+        variant='h5'
+        color='textPrimary'
+        style={{ fontWeight: 800 }}
+      >
+        Recomendado 
+      </Typography>
+
+      <Divider />
+
+      <Grid container spacing={4}>
+        <Grid item lg={3} md={4} sm={6} xs={12}
+          >
+            
+      <img
+        style={{ Width: '100%' }}
+        alt={'thumb'}
+        src='./imagens/Youtube.png'
+        />
+
+      <Typography 
+        style={{ fontWeight: 600 }}
+        gutterBottom
+        variant='body1'
+        color='textPrimary'
+        >
+        Youtube channel funny videos for you  
+      </Typography>
+
+      <Typography 
+      display='block'
+      variant='body2'
+      color='textSecondary'
+      >
+        YouTube Channel 
+      </Typography>
+
+      <Typography variant='body2' color='textSecondary'
+      >
+       11 mi views • at 1 week
+      </Typography>
+      
+        
+      <img className='youtube'
+        style={{ Width: '100%' }}
+        alt={'thumb'}
+        src='./imagens/Youtube.png'
+        title='Youtube channel funny videos for you'
+        />
+
+      <Typography 
+        style={{ fontWeight: 600 }}
+        gutterBottom
+        variant='body1'
+        color='textPrimary'
+        >
+        Youtube channel funny videos for you  
+      </Typography>
+
+      <Typography 
+      display='block'
+      variant='body2'
+      color='textSecondary'
+      >
+        YouTube Channel 
+      </Typography>
+
+      <Typography variant='body2' color='textSecondary'
+      >
+       11 mi views • at 1 week
+      </Typography>
+    
+
+  
+      <img className='youtube'
+        style={{ Width: '100%' }}
+        alt={'thumb'}
+        src='./imagens/Youtube.png'
+        title='Youtube channel funny videos for you'
+        />
+
+      <Typography 
+        style={{ fontWeight: 600 }}
+        gutterBottom
+        variant='body1'
+        color='textPrimary'
+        >
+        Youtube channel funny videos for you  
+      </Typography>
+
+      <Typography 
+      display='block'
+      variant='body2'
+      color='textSecondary'
+      >
+        YouTube Channel 
+      </Typography>
+
+      <Typography variant='body2' color='textSecondary'
+      >
+       11 mi views • at 1 week
+      </Typography>
+    
+  
+      <img className='youtube'
+        style={{ Width: '100%' }}
+        alt={'thumb'}
+        src='./imagens/Youtube.png'
+        title='Youtube channel funny videos for you'
+        />
+
+      <Typography 
+        style={{ fontWeight: 600 }}
+        gutterBottom
+        variant='body1'
+        color='textPrimary'
+        >
+        Youtube channel funny videos for you  
+      </Typography>
+
+      <Typography 
+      display='block'
+      variant='body2'
+      color='textSecondary'
+      >
+        YouTube Channel 
+      </Typography>
+
+      <Typography variant='body2' color='textSecondary'
+      >
+       11 mi views • at 1 week
+      </Typography>
+    
+
+  
+      <img className='youtube'
+        style={{ Width: '100%' }}
+        alt={'thumb'}
+        src='./imagens/Youtube.png'
+        title='Youtube channel funny videos for you'
+        />
+
+      <Typography 
+        style={{ fontWeight: 600 }}
+        gutterBottom
+        variant='body1'
+        color='textPrimary'
+        >
+        Youtube channel funny videos for you  
+      </Typography>
+
+      <Typography 
+      display='block'
+      variant='body2'
+      color='textSecondary'
+      >
+        YouTube Channel 
+      </Typography>
+
+      <Typography variant='body2' color='textSecondary'
+      >
+       11 mi views • at 1 week
+      </Typography>
+    
+           
+      <img className='youtube'
+        style={{ Width: '100%' }}
+        alt={'thumb'}
+        src='./imagens/Youtube.png'
+        title='Youtube channel funny videos for you'
+        />
+
+      <Typography 
+        style={{ fontWeight: 600 }}
+        gutterBottom
+        variant='body1'
+        color='textPrimary'
+        >
+        Youtube channel funny videos for you  
+      </Typography>
+
+      <Typography 
+      display='block'
+      variant='body2'
+      color='textSecondary'
+      >
+        YouTube Channel 
+      </Typography>
+
+      <Typography variant='body2' color='textSecondary'
+      >
+       11 mi views • at 1 week
+      </Typography>
+    
+
+            
+      <img className='youtube'
+        style={{ Width: '100%' }}
+        alt={'thumb'}
+        src='./imagens/Youtube.png'
+        title='Youtube channel funny videos for you'
+        />
+
+      <Typography 
+        style={{ fontWeight: 600 }}
+        gutterBottom
+        variant='body1'
+        color='textPrimary'
+        >
+        Youtube channel funny videos for you  
+      </Typography>
+
+      <Typography 
+      display='block'
+      variant='body2'
+      color='textSecondary'
+      >
+        YouTube Channel 
+      </Typography>
+
+      <Typography variant='body2' color='textSecondary'
+      >
+       11 mi views • at 1 week
+      </Typography>
+    
+             
+        </Grid> 
+    </Grid>
+
+    </Box>
+
+    </Box>
     </Box>
         </div>
     )
